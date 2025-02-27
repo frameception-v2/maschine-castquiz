@@ -96,10 +96,10 @@ export default async function Image() {
   const STYLE = {
     backgroundColor: BACKGROUND_COLOR,
     color: "white",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
+    display: "flex" as const,
+    flexDirection: "column" as const,
+    alignItems: "center" as const,
+    justifyContent: "center" as const,
     width: "100%",
     height: "100%",
   };
