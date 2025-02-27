@@ -52,6 +52,8 @@ export default function Frame() {
   const [context, setContext] = useState<Context.FrameContext>();
   const [score, setScore] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [added, setAdded] = useState(false);
+  const [addFrameResult, setAddFrameResult] = useState("");
 
   const addFrame = useCallback(async () => {
     try {
