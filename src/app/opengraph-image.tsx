@@ -92,11 +92,16 @@ export default async function Image() {
 
   const options = await initializeFonts();
 
-  const BACKGROUND_GRADIENT_START = "#c026d3";
-  const BACKGROUND_GRADIENT_END = "#ef4444";
-  const BACKGROUND_GRADIENT_STYLE = {
-    backgroundImage: `linear-gradient(to bottom, ${BACKGROUND_GRADIENT_START}, ${BACKGROUND_GRADIENT_END})`,
+  const BACKGROUND_COLOR = "#4f46e5";
+  const STYLE = {
+    backgroundColor: BACKGROUND_COLOR,
     color: "white",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    height: "100%",
   };
 
   debugLog("Generating image response");

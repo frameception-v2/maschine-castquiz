@@ -50,10 +50,8 @@ export default function Frame() {
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
   const [gameState, setGameState] = useState<'welcome' | 'quiz'>('welcome');
   const [context, setContext] = useState<Context.FrameContext>();
-
-  const [added, setAdded] = useState(false);
-
-  const [addFrameResult, setAddFrameResult] = useState("");
+  const [score, setScore] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
 
   const addFrame = useCallback(async () => {
     try {
@@ -146,20 +144,49 @@ export default function Frame() {
       }}
     >
       <div className="w-[300px] mx-auto py-2 px-2">
-        <h1 className="text-2xl font-bold text-center mb-4 text-gray-700 dark:text-gray-300">
-          {PROJECT_TITLE}
-        </h1>
         {gameState === 'welcome' ? (
-          <WelcomeScreen onStart={() => setGameState('quiz')} />
+          <>
+            <h1 className="text-2xl font-bold text-center mb-4">
+              Farcaster Quiz
+            </h1>
+            <WelcomeScreen onStart={() => {
+              setGameState('quiz');
+              sdk.actions.ready({
+                buttons: [
+                  {
+                    label: "Start Quiz",
+                    action: "post"
+                  }
+                ]
+              });
+            }} />
+          </>
         ) : (
           <div className="text-center">
-            <h2 className="text-xl font-semibold mb-4">Quiz Coming Soon!</h2>
-            <button
-              onClick={() => setGameState('welcome')}
-              className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
-            >
-              Back to Welcome
-            </button>
+            <h2 className="text-xl font-semibold mb-2">Question {currentQuestion + 1}</h2>
+            <p className="mb-4">Score: {score}</p>
+            <div className="grid grid-cols-2 gap-2">
+              {["A", "B", "C", "D"].map((option) => (
+                <button
+                  key={option}
+                  onClick={() => {
+                    setScore(score + 1);
+                    setCurrentQuestion(currentQuestion + 1);
+                    sdk.actions.ready({
+                      buttons: [
+                        {
+                          label: "Next Question",
+                          action: "post"
+                        }
+                      ]
+                    });
+                  }}
+                  className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+                >
+                  Option {option}
+                </button>
+              ))}
+            </div>
           </div>
         )}
       </div>
