@@ -22,17 +22,25 @@ import { createStore } from "mipd";
 import { Label } from "~/components/ui/label";
 import { PROJECT_TITLE } from "~/lib/constants";
 
-function ExampleCard() {
+function WelcomeScreen({ onStart }: { onStart: () => void }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Welcome to the Frame Template</CardTitle>
+        <CardTitle>Welcome to the Farcaster Quiz!</CardTitle>
         <CardDescription>
-          This is an example card that you can customize or remove
+          Test your knowledge of your Farcaster activity
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <Label>Place content in a Card here.</Label>
+      <CardContent className="flex flex-col items-center gap-4">
+        <p className="text-sm text-center">
+          Answer questions about your casts and interactions
+        </p>
+        <button
+          onClick={onStart}
+          className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+        >
+          Start Quiz
+        </button>
       </CardContent>
     </Card>
   );
@@ -40,6 +48,7 @@ function ExampleCard() {
 
 export default function Frame() {
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
+  const [gameState, setGameState] = useState<'welcome' | 'quiz'>('welcome');
   const [context, setContext] = useState<Context.FrameContext>();
 
   const [added, setAdded] = useState(false);
@@ -140,7 +149,19 @@ export default function Frame() {
         <h1 className="text-2xl font-bold text-center mb-4 text-gray-700 dark:text-gray-300">
           {PROJECT_TITLE}
         </h1>
-        <ExampleCard />
+        {gameState === 'welcome' ? (
+          <WelcomeScreen onStart={() => setGameState('quiz')} />
+        ) : (
+          <div className="text-center">
+            <h2 className="text-xl font-semibold mb-4">Quiz Coming Soon!</h2>
+            <button
+              onClick={() => setGameState('welcome')}
+              className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+            >
+              Back to Welcome
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
