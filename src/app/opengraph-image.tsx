@@ -117,7 +117,7 @@ Please refer to Satori’s documentation for a list of supported HTML and CSS fe
     (
       <div
         tw="h-full w-full flex flex-col justify-center items-center relative"
-        style={BACKGROUND_GRADIENT_STYLE}
+        style={STYLE}
       >
         <h1 tw="text-9xl text-center font-semibold">{PROJECT_TITLE}</h1>
         <h3 tw="text-4xl font-normal">{PROJECT_DESCRIPTION}</h3>
